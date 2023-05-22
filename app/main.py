@@ -2,7 +2,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from logging import getLogger
 from sqlalchemy.orm import Session
 
-from dbinterface import core, schemas
+from dbinterface import core, errors, schemas
 from dbinterface.crud import (
     amount_total_get_by_user,
     transactions_create,
@@ -32,11 +32,11 @@ async def post_transactions(
     logger.info("transaction posted")
     try:
         res = transactions_create(db, transaction)
-    except Exception:
+    except errors.AmountExceedError as e:
         logger.info("transaction failed")
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
-            detail="Request is temporarily stopped",
+            detail=f"Request is temporarily stopped: {e}",
         )
 
     return res
