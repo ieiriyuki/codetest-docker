@@ -1,0 +1,2 @@
+class AmountExceedError(Exception):
+    pass
