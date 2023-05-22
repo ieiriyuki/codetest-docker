@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 
 from dbinterface import core
+from dbinterface import errors
 from dbinterface import models
 from dbinterface import schemas
 
@@ -24,8 +25,9 @@ def transactions_create(
 
     if amount_total > core.AMOUNT_LIMIT:
         db.close()
-        raise Exception("Transaction amount reached limit")
+        raise errors.AmountExceedError("Transaction amount reached limit")
 
+    logger.warning("transaction is applicable")
     db.commit()
     db.refresh(transaction_i)
 
