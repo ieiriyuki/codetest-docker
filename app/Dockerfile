@@ -9,4 +9,4 @@ RUN pip install -U pip \
 
 COPY . .
 
-# ENTRYPOINT [ "uvicorn", "main:app", "--port", "8888" ]
+ENTRYPOINT [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8888" ]
