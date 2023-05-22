@@ -1,4 +1,12 @@
-FROM golang:1.18
+FROM python:3.10
 
-COPY main.go .
-CMD go run main.go
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+
+RUN pip install -U pip \
+    && pip install -r requirements.txt
+
+COPY . .
+
+# ENTRYPOINT [ "uvicorn", "main:app", "--port", "8888" ]
