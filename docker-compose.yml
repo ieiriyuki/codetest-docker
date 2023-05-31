@@ -13,6 +13,7 @@ services:
     hostname: db
 
   app:
+    image: app
     build:
       context: app
     depends_on:
@@ -23,6 +24,7 @@ services:
       - DB_NAME=codetest
       - DB_PORT=3306
       - DB_DIALECT=mysql+pymysql
+      - PORT=8888
     ports:
       - 8888:8888
     volumes:
