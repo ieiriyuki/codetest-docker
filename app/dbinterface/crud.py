@@ -14,6 +14,8 @@ def transactions_create(
     db: Session,
     transaction: schemas.TransactionsCreate
 ):
+    user_i = db.get(models.Users, {"id": transaction.user_id}, with_for_update=True)
+
     transaction_i = models.Transactions(**transaction.dict())
     logger.warning("insert a transaction")
     db.add(transaction_i)
